@@ -1,20 +1,23 @@
 package suzuki.aos.demo.model;
 
 import jakarta.persistence.*;
-
+// @Entity diz ao JPA que essa classe representa uma 
+// tabela no banco de dados
 @Entity
-
+// Define o nome da tabela que sera criada/usada no banco
 @Table(name = "treino")
 
 public class Treino {
 
-  
+   // @ID marca esse campo como chave primaria da tabela
     @Id
-    
+    // @GeneratedValue com IDENTITY indica
+    // geracao de valor do tipo identidade
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-  
+  // @Column configura a coluna: nullable = false significa que nao
+    // pode ser nulo ( campo obrigatorio )
     @Column(nullable = false, length = 100)
     private String exercicio;
 
