@@ -6,38 +6,38 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
-//@Schema documenta essa classe na interface swagger
-@Schema(description = "Product data transfer object")
+// @Schema serve para documentar a classe no Swagger
+@Schema(description = "Dados do exercicio")
 public class ProductDTO {
 
-    // READ_ONLY indica ao swagger que o cliente nao envia o ID, apenas recebe
-    @Schema(description = "Unique identifier of the product", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
+    // O cliente apenas recebe o ID
+    @Schema(description = "ID do exercicio", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
-    // @NotBlank impede que o campo seja vazio ou tenha so espacos
-    // @Size limita os tamanhos minimo e maximo do campo
-    @NotBlank(message = "Coloque o exercicio")
-    @Size(min = 2, max = 100, message = "Nome do exercicio deve conter de 2 a 100 caracteres")
-    @Schema(description = "Exercicio de peito", example = "Supino")
+    // Impede que o nome fique vazio
+    @NotBlank(message = "Coloque o nome do exercicio")
+    @Size(min = 2, max = 100, message = "O nome deve ter de 2 a 100 caracteres")
+    @Schema(description = "Nome do exercicio", example = "Supino")
     private String exercicios;
 
-    @NotBlank(message = "Coloque a quantidade de series")
-    @Size(max = 100, message = "Descricao deve ter no maximo 100 caracteres")
-    @Schema(description = "4 series", example = "Supino inclinado")
+    // Quantidade de series do exercicio
+    @Positive(message = "As series devem ser maior que zero")
+    @Schema(description = "Quantidade de series", example = "4")
     private Integer series;
 
-    // @Positive garante que o valor enviado seja maior que zero
-    @Positive(message = "Quantidade de repeticoes deve ser maior que zero")
-    @Schema(description = "Quantidade de repeticoes", example = "8 repeticoes")
-    private Double repeticoes
+    // Quantidade de repeticoes
+    @Positive(message = "As repeticoes devem ser maior que zero")
+    @Schema(description = "Quantidade de repeticoes", example = "8")
+    private Integer repeticoes;
 
-    // @PositiveOrZero aceita zero ou qualquer numero positivo
-    @PositiveOrZero(message = "numero de exercicios para o grupo muscular deve ser maior que zero")
-    @Schema(description = "exercicios para o grupo musculau", example = "4")
+    // Aceita zero ou numeros positivos
+    @PositiveOrZero(message = "O grupo muscular nao pode ser negativo")
+    @Schema(description = "Grupo muscular", example = "4")
     private int grupoMuscular;
 
-    // Construtor usado pelo ProductMapper para montar o DTO a partir da entidade
-    public ProductDTO(Long id, String name, String descripton, double value, int quantity) {
+    // Construtor do DTO
+    public ProductDTO(Long id, String exercicios, Integer series,
+                      Integer repeticoes, int grupoMuscular) {
         this.id = id;
         this.exercicios = exercicios;
         this.series = series;
@@ -49,8 +49,8 @@ public class ProductDTO {
         return id;
     }
 
-    public String getExercicio() {
-        return exercicio;
+    public String getExercicios() {
+        return exercicios;
     }
 
     public Integer getSeries() {
@@ -65,20 +65,19 @@ public class ProductDTO {
         return grupoMuscular;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setExercicios(String exercicios) {
+        this.exercicios = exercicios;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSeries(Integer series) {
+        this.series = series;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setRepeticoes(Integer repeticoes) {
+        this.repeticoes = repeticoes;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setGrupoMuscular(int grupoMuscular) {
+        this.grupoMuscular = grupoMuscular;
     }
-
 }
